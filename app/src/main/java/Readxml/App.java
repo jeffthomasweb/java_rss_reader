@@ -8,28 +8,26 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import java.net.*;
 import java.net.http.*;
 import java.io.*;
 import java.util.*;
-
 import org.xml.sax.InputSource;
+
 public class App {
-	
-    private static final String FILENAME = "/home/jeff/jprojects/xml.txt";
+    //Uncomment the next line if reading RSS from a local text file rather than a RSS URL 	
+    //private static final String FILENAME = "local_text_file.txt";
     public static void main(String[] args) throws Exception {
+	//Request the RSS feed. Uncomment lines 31-34 if using a local text file.
 	HttpClient myhc = HttpClient.newHttpClient();
 	HttpRequest myreq = HttpRequest.newBuilder(new URI("https://feeds.npr.org/1001/rss.xml")).build();
 	HttpResponse<String> myresp = myhc.send(myreq, HttpResponse.BodyHandlers.ofString());
@@ -43,7 +41,7 @@ public class App {
           // parse XML file
 		DocumentBuilder db = dbf.newDocumentBuilder();
 		Document doc = db.parse(new InputSource(new StringReader(resp)));
-		//Document doc = db.parse(resp);
+		//Uncomment the next line if reading RSS from a local text file
           	//Document doc = db.parse(new File(FILENAME));
 
           // optional, but recommended
@@ -53,7 +51,6 @@ public class App {
           	System.out.println("Root Element :" + doc.getDocumentElement().getNodeName());
           	System.out.println("------");
 
-          // get <staff>
           	NodeList list = doc.getElementsByTagName("item");
 
           	for (int temp = 0; temp < list.getLength(); temp++) {
@@ -70,13 +67,14 @@ public class App {
 				String description = element.getElementsByTagName("description").item(0).getTextContent();
 				results.add(description);
 
-                  		//System.out.println("Current Element :" + node.getNodeName());
+                  		
                   		System.out.println("title : " + title);
                   		System.out.println("description : " + description);
 
 			}
 			
 			}
+		//Uncomment the next line if want to print list results
 		//System.out.println(results);
 	} catch (ParserConfigurationException | SAXException | IOException e) {
           e.printStackTrace();
