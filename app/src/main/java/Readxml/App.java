@@ -27,7 +27,7 @@ public class App {
     //local text file uncomment the next line and add the text file name. 	 	
     //private static final String FILENAME = "local_text_file.txt";
     public static void main(String[] args) throws Exception {
-	//Request the RSS feed. Uncomment lines 32-35 if using a local text file.
+	//Request the RSS feed. Uncomment lines 31-34 if using a local text file.
 	HttpClient myhc = HttpClient.newHttpClient();
 	HttpRequest myreq = HttpRequest.newBuilder(new URI("https://feeds.npr.org/1001/rss.xml")).build();
 	HttpResponse<String> myresp = myhc.send(myreq, HttpResponse.BodyHandlers.ofString());
@@ -67,7 +67,8 @@ public class App {
 			}
 			
 			}
-		//Uncomment the next line if you'd like to print the results list (the for loop starting at line 51 already printed the RSS Feed stories)  
+		//Uncomment line 72 if you'd like to print the RSS Feed stories as a list. This would be a duplicate as we already printed
+		//the stories using a for loop at line 50.   
 		//System.out.println(results);
 	} catch (ParserConfigurationException | SAXException | IOException e) {
           e.printStackTrace();
