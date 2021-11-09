@@ -24,32 +24,27 @@ import java.util.*;
 import org.xml.sax.InputSource;
 
 public class App {
-    //Uncomment the next line if reading RSS from a local text file rather than a RSS URL 	
+    //I used HttpClient to request the RSS Feed data. If you would like to read the RSS Feed data from a 
+    //local text file uncomment the next line and add the text file name. 	 	
     //private static final String FILENAME = "local_text_file.txt";
     public static void main(String[] args) throws Exception {
-	//Request the RSS feed. Uncomment lines 31-34 if using a local text file.
+	//Request the RSS feed. Uncomment lines 32-35 if using a local text file.
 	HttpClient myhc = HttpClient.newHttpClient();
 	HttpRequest myreq = HttpRequest.newBuilder(new URI("https://feeds.npr.org/1001/rss.xml")).build();
 	HttpResponse<String> myresp = myhc.send(myreq, HttpResponse.BodyHandlers.ofString());
 	String resp = myresp.body();        
 	List<String> results = new ArrayList<String>();
-        // Instantiate the Factory
+        
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
         try {
 
-          // parse XML file
-		DocumentBuilder db = dbf.newDocumentBuilder();
+          	DocumentBuilder db = dbf.newDocumentBuilder();
 		Document doc = db.parse(new InputSource(new StringReader(resp)));
 		//Uncomment the next line if reading RSS from a local text file
           	//Document doc = db.parse(new File(FILENAME));
 
-          // optional, but recommended
-          // http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
-          	doc.getDocumentElement().normalize();
-
-          	System.out.println("Root Element :" + doc.getDocumentElement().getNodeName());
-          	System.out.println("------");
+                doc.getDocumentElement().normalize();
 
           	NodeList list = doc.getElementsByTagName("item");
 
@@ -61,7 +56,6 @@ public class App {
 
                   		Element element = (Element) node;
 
-                  // get text
                   		String title = element.getElementsByTagName("title").item(0).getTextContent();
                   		results.add(title);
 				String description = element.getElementsByTagName("description").item(0).getTextContent();
@@ -74,7 +68,7 @@ public class App {
 			}
 			
 			}
-		//Uncomment the next line if want to print list results
+		//Uncomment the next line if you'd like to print the results list (the for loop starting at line 51 already printed the RSS Feed stories)  
 		//System.out.println(results);
 	} catch (ParserConfigurationException | SAXException | IOException e) {
           e.printStackTrace();
