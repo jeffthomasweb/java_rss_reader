@@ -23,11 +23,8 @@ import java.util.*;
 import org.xml.sax.InputSource;
 
 public class App {
-    //I used HttpClient to request the RSS Feed data. If you would like to read the RSS Feed data from a 
-    //local text file uncomment the next line and add the text file name. 	 	
-    //private static final String FILENAME = "local_text_file.txt";
+    # Use HttpClient to request the RSS Feed data. 
     public static void main(String[] args) throws Exception {
-	//Request the RSS feed. Uncomment lines 31-34 if using a local text file.
 	HttpClient myhc = HttpClient.newHttpClient();
 	HttpRequest myreq = HttpRequest.newBuilder(new URI("https://feeds.npr.org/1001/rss.xml")).build();
 	HttpResponse<String> myresp = myhc.send(myreq, HttpResponse.BodyHandlers.ofString());
@@ -40,8 +37,6 @@ public class App {
 
           	DocumentBuilder db = dbf.newDocumentBuilder();
 		Document doc = db.parse(new InputSource(new StringReader(resp)));
-		//Uncomment the next line if reading RSS from a local text file
-          	//Document doc = db.parse(new File(FILENAME));
 
                 doc.getDocumentElement().normalize();
 
@@ -67,9 +62,7 @@ public class App {
 			}
 			
 			}
-		//Uncomment line 72 if you'd like to print the RSS Feed stories as a list. This would be a duplicate as we already printed
-		//the stories using a for loop at line 50.   
-		//System.out.println(results);
+		
 	} catch (ParserConfigurationException | SAXException | IOException e) {
           e.printStackTrace();
       }
