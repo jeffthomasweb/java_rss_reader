@@ -26,6 +26,7 @@ public class App {
     # Use HttpClient to request the RSS Feed data. 
     public static void main(String[] args) throws Exception {
 	HttpClient myhc = HttpClient.newHttpClient();
+	#This script uses the NPR RSS Feed as an example. Enter your RSS feed URL below.
 	HttpRequest myreq = HttpRequest.newBuilder(new URI("https://feeds.npr.org/1001/rss.xml")).build();
 	HttpResponse<String> myresp = myhc.send(myreq, HttpResponse.BodyHandlers.ofString());
 	String resp = myresp.body();        
